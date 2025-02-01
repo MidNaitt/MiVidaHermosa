@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #e6ccff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            display: none; /* Ocultamos inicialmente */
+        }
+        h1 {
+            color: #9966cc;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .yes {
+            background-color: #9966cc;
+            color: white;
+        }
+        .yes:hover {
+            background-color: #663399;
+        }
+        .no {
+            background-color: #d9b3ff;
+            color: black;
+            position: absolute;
+        }
+        .music-container {
+            display: none;
+        }
+        .intro-screen {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #9966cc;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de bienvenida -->
+    <div class="intro-screen" id="introScreen">
+        <p>Haz click en iniciar 💜</p>
+        <button onclick="iniciarPagina()">Iniciar</button>
+    </div>
+
+    <!-- Contenido principal (oculto al principio) -->
+    <div class="container" id="mainContainer">
+        <h1>¿Quieres ser mi San Valentín? 💜</h1>
+        <div class="buttons">
+            <button class="yes" onclick="aceptar()">Sí</button>
+            <button class="no" onmouseover="mover(this)" onclick="mover(this)">No</button>
+        </div>
+        <div class="music-container">
+            <iframe id="soundcloudPlayer" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1113912268">
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        function iniciarPagina() {
+            // Iniciar la música al hacer clic en "Iniciar"
+            iniciarMusica();
+
+            // Ocultar la pantalla de bienvenida
+            document.getElementById("introScreen").style.display = "none";
+
+            // Mostrar la página principal
+            document.getElementById("mainContainer").style.display = "block";
+        }
+
+        function aceptar() {
+            alert("Entonces es una cita, te amo 💜");
+        }
+
+        function mover(button) {
+            let container = document.querySelector(".container");
+            let maxX = container.clientWidth - button.clientWidth;
+            let maxY = container.clientHeight - button.clientHeight;
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+
+        function iniciarMusica() {
+            let iframe = document.getElementById("soundcloudPlayer");
+            let soundcloudWidget = SC.Widget(iframe);
+            soundcloudWidget.play();
+        }
+
+        window.onload = function() {
+            // Esto se asegura de que la página se cargue sin mostrar el contenido principal
+            document.getElementById("mainContainer").style.display = "none";
+        }
+    </script>
+    <script src="https://w.soundcloud.com/player/api.js"></script> <!-- API de SoundCloud -->
+</body>
+</html>
